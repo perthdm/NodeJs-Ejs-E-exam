@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: จัดการการสอบ</title>
+    <style>
+        .color-black {
+            color: #333;
+        }
+
+        p {
+            font-size: 0.9rem;
+            margin: 0px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>จัดการการสอบ <%= result.idSubject %>
+                <%= result.subject %></span></h3>
+        <p class="color-black"><%= result.idSubject %> <%= result.subject %></p>
+        <p class="color-black">ปีการศึกษา: <span><%= result.year %>/<%= result.term %></span></p>
+        <p class="color-black">จำนวนนิสิต: <span><%= result.student.length %></span> คน</p>
+        <p class="color-black">อาจารย์ผู้สอน :</p>
+        <% for(var j = 0 ; j<result.teacher.length ; j++) { %>
+        <p class="color-black" style="padding-left:30px;"><%= j+1 %> <%= result.teacher[j].position %>
+            <%= result.teacher[j].firstname %>
+            <%= result.teacher[j].lastname %></p>
+        <% } %>
+
+        <hr>
+
+        <div uk-grid>
+            <div class="uk-width-3-4">
+                <h4>การสอบ</h4>
+            </div>
+            <div class="uk-width-1-4">
+                <a href="/exam/addExam/<%= result._id %>" class="uk-button uk-button-primary" style="width: 100%;"
+                    uk-toggle="target: #my-id"><i class="uk-icon-link" uk-icon="plus-circle" style="color:white"></i>
+                    เพิ่มการสอบ</a>
+            </div>
+        </div>
+
+        <table class="uk-table uk-table-divider">
+            <thead>
+                <tr>
+                    <th class="uk-width-small uk-text-center">ลำดับ</th>
+                    <th class="uk-text-center">รายละเอียด</th>
+                    <th class="uk-text-center">วันที่สอบ</th>
+                    <th class="uk-width-medium uk-text-center">เวลาสอบ</th>
+                </tr>
+            </thead>
+            <tbody class="uk-text-center">
+
+                <%  for(let i = 0 ; i<result2.length ; i++){ %>
+                <tr onclick="view('<%= result2[i]._id %>')">
+                    <td><%= i+1 %></td>
+                    <td><%= result2[i].topic %></td>
+                    <td><%= result2[i].date.toLocaleDateString() %></td>
+                    <td><%= result2[i].timestart.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %> น. -
+                        <%= result2[i].timeend.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %> น.</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+<script>
+   
+    function view(_id) {
+        window.location.href = "/exam/examDetail/" + _id
+    }
+
+</script>

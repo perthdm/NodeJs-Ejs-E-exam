@@ -1,0 +1,80 @@
+<!------------------------------- Sidebar ------------------------------->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<div class="sidebar">
+    <center>
+        <div style="font-size: 45px; font-weight: 500;color: #f7a317;padding-top: 30px;"><span
+                style="font-weight: 500;color: #6bb5ff">E-</span>EXAMS</div>
+        <p style="margin-top: -5px;color: white;">ระบบจัดการการสอบ</p>
+    </center>
+    <div class="uk-card  uk-card-body ">
+        <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+            <li><a href="/home"><i class="fas fa-home" style="margin-right:15px;"></i>หน้าหลัก</a></li>
+
+            <li class="uk-nav-divider"></li>
+            <%  if(sess.type == 'staff'){ %>
+            <li class="uk-nav-header">บุคลากร/นิสิต</li>
+            <li><a href="/student"><i class="fas fa-user-graduate" style="margin-right:15px;"></i>จัดการนิสิต</a></li>
+            <li><a href="/teacher"><i class="fas fa-user" style="margin-right:15px;"></i>จัดการอาจารย์</a>
+            </li>
+            <li><a href="/staff"><i class="fas fa-user-tie" style="margin-right:15px;"></i>จัดการเจ้าหน้าที่</a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">สถานที่</li>
+            <li><a href="/building"><i class="fas fa-school" style="margin-right:15px;"></i>จัดการห้อง</a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">วิชาการ</li>
+            <li><a href="/year"><i class="fas fa-tasks" style="margin-right:15px;"></i>จัดการปีการศึกษา</a>
+            </li>
+            <li><a href="/course"><i class="fas fa-bars" style="margin-right:15px;"></i>จัดการวิชาที่เปิดสอน</a>
+            </li>
+            <li><a href="/exam"><i class="fab fa-buromobelexperte" style="margin-right:15px;"></i>จัดการการสอบ</a> </li>
+            
+            <li><a href="/staff/examiner"><i class="fas fa-search"  style="margin-right:15px;"></i>ดูห้องคุมสอบ</a> </li>
+
+
+            <%  }else if(sess.type == 'student'){ %>
+
+
+            <li class="uk-nav-header">นิสิต</li>
+            <li><a href="/student/subjectExam"><i class="fas fa-search" style="margin-right:15px;"></i>ดูห้องสอบ</a> </li>
+            <!-- <li><a href="/student"><i class="fas fa-user-graduate" style="margin-right:15px;"></i>จัดการนิสิต</a></li>
+            <li><a href="/teacher"><i class="fas fa-user" style="margin-right:15px;"></i>จัดการอาจารย์</a>
+            </li>
+            <li><a href="/staff"><i class="fas fa-user-tie" style="margin-right:15px;"></i>จัดการเจ้าหน้าที่</a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">สถานที่</li>
+            <li><a href="/building"><i class="fas fa-school" style="margin-right:15px;"></i>จัดการห้อง</a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">วิชาการ</li>
+            <li><a href="/year"><i class="fas fa-tasks" style="margin-right:15px;"></i>จัดการปีการศึกษา</a>
+            </li>
+            <li><a href="/course"><i class="fas fa-bars" style="margin-right:15px;"></i>จัดการวิชาที่เปิดสอน</a>
+            </li>
+            <li><a href="/exam"><i class="fab fa-buromobelexperte" style="margin-right:15px;"></i>จัดการการสอบ</a> </li> -->
+
+           
+          
+           
+
+            <!-- <li class="uk-nav-header">วิชาการ</li>
+            <li><a href="/staff/examiner"><i class="fas fa-search"  style="margin-right:15px;"></i>ดูห้องคุมสอบ</a> </li> -->
+
+            <% }else if(sess.type == 'teacher'){ %>
+            <li class="uk-nav-header">วิชาการ</li>
+            <li><a href="/staff/examiner"><i class="fas fa-search"  style="margin-right:15px;"></i>ดูห้องคุมสอบ</a> </li>
+            <% } %>
+
+
+
+        </ul>
+    </div>
+</div>
+<!------------------------------- Sidebar ------------------------------->

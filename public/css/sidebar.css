@@ -1,0 +1,31 @@
+.sidebar {
+    left: 0;
+     height: 100vh;
+     overflow-y: auto;
+     -webkit-box-shadow: 3px 0px 5px -1px rgba(0,0,0,0.2);
+     -moz-box-shadow: 3px 0px 5px -1px rgba(0,0,0,0.2);
+     box-shadow: 3px 0px 5px -1px rgba(0,0,0,0.2);
+     background-color: #2b2b2b;
+     position: fixed;
+     width: 300px;
+     top: 0;
+     z-index: 1000000;
+ }
+
+ .uk-nav-default .uk-nav-header {
+    color: #f7a317;
+}
+
+.uk-nav-default>li>a {
+    color: #fff;
+    font-weight: 300;
+}
+
+.uk-nav-default>li>a>span {
+    color: #fff;
+  
+}
+
+.uk-nav-default .uk-nav-divider {
+    border-top: 1px solid #2b2b2b;
+}

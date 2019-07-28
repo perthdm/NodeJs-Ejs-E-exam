@@ -1,0 +1,19 @@
+<!------------------------------- Top Bar ------------------------------->
+<div class="nav">
+    <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav" style="margin-right:20px;">
+                <li>
+                    <a href="#" style="color:#FFF;"> <span uk-icon="user" style="margin-right:10px;"></span>
+                         <%= sess.type %>: <%= sess.obj[0].firstname %> <%= sess.obj[0].lastname %></a>
+                    <div class="uk-navbar-dropdown" style="margin-top:50px;">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li class="uk-active"><a href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<!------------------------------- Top Bar ------------------------------->

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: เพิ่มการสอบ</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+        <%- include('../layouts/topbar') %>;
+
+
+            <div class="content">
+                <h3 class="uk-heading-line uk-text-center"><span>เพิ่มการสอบ <%= course.idSubject %> <%= course.subject %></span></h3>
+                <div class="uk-text-center">
+                    <table style="width:80%;">
+                        <tr>
+                            <td style="text-align:right; width:200px;">วันที่สอบ : &nbsp;</td>
+                            <td class="uk-text-left"><%= dateTime.date.toLocaleDateString(); %></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; width:200px;">เวลาเริ่มสอบ : &nbsp;</td>
+                            <td class="uk-text-left"><%= dateTime.timeStart.toLocaleTimeString() %> น. - <%= dateTime.timeEnd.toLocaleTimeString() %> น.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; width:200px;">หัวข้อการสอบ : &nbsp;</td>
+                            <td>
+                                <input type="text" class="uk-input" required name="timeend">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; width:200px;">รายละเอียดการสอบ : &nbsp;</td>
+                            <td>
+                                <input type="text" class="uk-input" required name="timeend">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a href="/exam/showroomExam" class="uk-button uk-button-primary">เลือกเวลาสอบใหม่</a></td>
+    
+                        </tr>
+
+                    </table>
+                </div>
+
+                <br>
+                <!-- เพิ่มข้อมูลห้องสอบ -->
+                <div class="uk-text-center" uk-grid>
+                    <h5><span>ห้องสอบ</span></h5>
+                </div>
+                <table class="uk-table uk-table-divider">
+                    <thead>
+                        <tr>
+                            <th class="uk-table-shrink uk-text-center">เลือก</th>
+                            <th class="uk-text-center">ห้อง</th>
+                            
+                            <th class="uk-width-small uk-text-center">จำนวนที่นั่ง</th>
+                        </tr>
+                    </thead>
+                    <tbody class="uk-text-center">
+                        <% for(let i=0;i<room.length;i++) { %>
+                            <% if (room[i].status) { %>
+                                <tr>
+                                    <td> <input type="checkbox" name="checkroom"></td>
+                                    <td>
+                                        <%= room[i].namebuilding %>-
+                                            <%= room[i].name %>
+                                    </td>
+    
+                                    <td>
+                                        <%= room[i].usage %> /
+                                            <%= room[i].row * room[i].col %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% } %>
+                    </tbody>
+                </table>
+
+
+                <p class="uk-text-center">
+                    <a href="/exam/showroomExam" class="uk-button uk-button-primary">บันทึก</a>
+                    <a class="uk-button uk-button-default uk-modal-close" type="button">ยกเลิก</a>
+                </p>
+            </div>
+</body>
+
+</html>
+
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>

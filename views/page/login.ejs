@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <title>E-Exams: เข้าสู่ระบบ</title>
+</head>
+
+<body>
+    <div class="bg">
+        <div class="content">
+            <div style="text-align: center">
+                <form method="POST" action="/login">
+                        <div style="font-size: 36px; font-weight: 200;color: white;"><span
+                            style="font-weight: 500;">E</span>-EXAMS</div>
+                    <p style="margin-top: 0px;color: white;">ระบบจัดการการสอบ</p>
+                    <div class="uk-margin uk-child-width-1-1">
+                        <div class="uk-inline ">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input" type="text" name="username">
+                        </div>
+                    </div>
+    
+                    <div class="uk-margin uk-child-width-1-1">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                            <input class="uk-input" type="password" name="password">
+                        </div>
+                    </div>
+    
+                    <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit">
+                        <span class="uk-margin-small-right" uk-icon="sign-in"></span>
+                        เข้าสู่ระบบ
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    if("<%= status %>" == 1){
+        swal ( "Try again" ,  "<%= message %>" ,  "error" )
+    }
+</script>

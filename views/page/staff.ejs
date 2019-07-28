@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: จัดการเจ้าหน้าที่</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span class="color-warning">จัดการเจ้าหน้าที่</span></h3>
+        <div class="uk-text-center" uk-grid>
+            <div class="uk-width-1-2">
+                <div class="uk-search uk-search-default" style="width: 100%;">
+                    <input class="uk-search-input" type="text" id="myInput" onkeyup="search()"
+                        placeholder="ค้นหา ชื่อ-นามสกุล / ตำแหน่ง">
+                </div>
+            </div>
+            <div class="uk-width-1-4">
+                <a href="/staff/addStaff" class="uk-button uk-button-primary" style="width: 100%;"><i
+                        class="uk-icon-link" uk-icon="plus-circle" style="color:#FFF;"></i> เพิ่มข้อมูลเจ้าหน้าที่</a>
+            </div>
+            <div class="uk-width-1-4">
+                <button class="uk-button uk-button-primary" style="width:100%;" type="submit" href="#modal-upload" uk-toggle> นำเข้าข้อมูลเจ้าหน้าที่</button>
+            </div>
+        </div>
+
+
+        <table class="uk-table uk-table-divider uk-table-striped" id="myTable">
+            <thead>
+                <tr>
+                    <th class="uk-text-center">ลำดับ</th>
+                    <th class="uk-text-center" style="width:10%">ตำแหน่ง</th>
+                    <th class="uk-text-center" style="width:30%">ชื่อ - นามสกุล</th>
+                    <th class="uk-text-center">อีเมล</th>
+                    <th class="uk-text-center" style="width:10%">เบอร์โทรศัพท์</th>
+                    <th class="uk-text-center">ตัวเลือก</th>
+                </tr>
+            </thead>
+            <tbody class="uk-text-center">
+                <% for(var i=0 ; i<result.length ; i++){ %>
+                <tr>
+                    <td>
+                        <%= i+1 %>
+                    </td>
+                    <td>
+                        <%= result[i].position %>
+                    </td>
+                    <td>
+                        <%= result[i].firstname %>
+                        <%= result[i].lastname %>
+                    </td>
+                    <td class="uk-text-center">
+                        <%= result[i].email %>
+                    </td>
+                    <td class="uk-text-center">
+                        <%= result[i].phone %>
+                    </td>
+                    <td class="uk-text-center">
+                        <a onclick="view('<%= result[i]._id %>')" class="uk-icon-link uk-icon-button  btn-primary"
+                            uk-icon="copy"></a>
+                        <a onclick="edit('<%= result[i]._id %>')" class="uk-icon-link uk-icon-button btn-warning"
+                            uk-icon="file-edit"></a>
+                        <a onclick="del('<%= result[i]._id %>')" class="uk-icon-link uk-icon-button btn-danger"
+                            uk-icon="trash"></a>
+                    </td>
+                </tr>
+                <% } %>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Model upload -->
+    <div id="modal-upload" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title uk-legend">นำเข้าข้อมูลเจ้าหน้าที่</h2>
+            <form action="/staff/upload" method="post" enctype="multipart/form-data">
+                <fieldset class="uk-fieldset">
+
+                    <div style="width: 500px;">
+                        <div style="padding-top: 10px;display: inline;">นำเข้าเจ้าหน้าที่</div>
+
+                        <input type="file" name="staff">
+
+                    </div>
+
+
+                </fieldset>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                    <button class="uk-button uk-button-default uk-modal-close " type="button">Cancel</button>
+
+                </p>
+            </form>
+
+        </div>
+    </div>
+    <!-- Model upload -->
+
+</body>
+
+</html>
+
+<script src="uikit/js/uikit.min.js"></script>
+<script src="uikit/js/uikit-icons.min.js"></script>
+
+<script>
+    function del(_id) {
+        window.location = "/staff/delete/" + _id;
+    }
+
+    function edit(_id) {
+        window.location = "/staff/edit/" + _id;
+    }
+
+    function view(_id) {
+        window.location = "/staff/view/" + _id;
+    }
+
+
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            td2 = tr[i].getElementsByTagName("td")[2];
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                txtValue2 = td2.textContent || td2.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

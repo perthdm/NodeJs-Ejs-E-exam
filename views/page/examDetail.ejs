@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css">
+    <!-- <link rel="stylesheet" href="/Semantic-UI/dist/semantic.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <!-- Select Search CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/multi-select.css">
+
+    <title>E-Exams: จัดการการสอบ</title>
+    <style>
+        .color-black {
+            color: #333;
+        }
+
+        p {
+            font-size: 0.9rem;
+            margin: 0px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+    <div class="content">
+
+
+
+        <h3 class="uk-heading-line uk-text-center"><span>หัวข้อการสอบ : <%= result.topic %></span></h3>
+        <p>วิชา :
+            <%= result.course.idSubject %>
+            <%= result.course.subject %>
+        </p>
+        <p>รายละเอียดการสอบ :
+            <%= result.detail %>
+        </p>
+        <p>วัน-เวลาสอบ : <span><%= result.date.toLocaleDateString() %>
+                <%= result.timestart.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %> น. -
+                <%= result.timeend.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %> น.</span></p>
+        <p>ปีการศึกษา : <span><%= result.course.year %>/<%= result.course.term %></span></p>
+        <p>จำนวนนิสิตที่ลงทะเบียน : <span><%= result.course.student.length %></span> คน</p>
+        <p>อาจารย์ผู้สอน :
+            <% for(var  i = 0 ; i < result.course.teacher.length; i++) { %>
+            <%= i+1 %>. <%= result.course.teacher[i].position %><%= result.course.teacher[i].firstname %>
+            <%= result.course.teacher[i].lastname %>
+            <% } %>
+        </p>
+
+
+        <h5><span>จัดการสอบ</span></h5>
+
+        <table class="uk-table uk-table-divider">
+            <thead>
+                <tr>
+                    <th class="uk-width-small uk-text-center">ห้องสอบ</th>
+                    <th class="uk-width-small uk-text-center">ผู้คุมสอบ</th>
+                    <th class="uk-width-small uk-text-center">จัดการห้องสอบ</th>
+
+                </tr>
+            </thead>
+            <tbody class="uk-text-center">
+
+                <% for(var i = 0 ; i < result.exam.length ; i++) { %>
+                <tr>
+                    <td>
+                        <%= result.exam[i].room %>
+                    </td>
+                    <td>
+                        <% for(var j = 0; j < examiner.length ; j++ ) { %>
+                            <% if(result.exam[i].room == examiner[j].room ) {%>
+                               <%= examiner[j].name %> <%= examiner[j].lastname %><br>
+                            <% } %>
+                        <% } %>
+                    </td>
+                    <td>
+                        <button class="uk-button uk-button-primary" type="submit"
+                            href="#modal-teacher<%= result.exam[i].room %>" uk-toggle>จัดการผู้คุมสอบ</button>
+                        <button class="uk-button uk-button-primary" type="submit"
+                            href="#modal-student<%= result.exam[i].room %>" uk-toggle>ดูรายชื่อนิสิต</button>
+                    </td>
+
+                    <!-- Model teacher -->
+                    <div id="modal-teacher<%= result.exam[i].room %>" uk-modal>
+                        <div class="uk-modal-dialog">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <div class="uk-modal-header">
+                                <h2 class="uk-modal-title">ผู้คุมสอบ : ห้องสอบ <%= result.exam[i].room %></h2>
+                            </div>
+                            <div class="uk-modal-body">
+                                <ul class="uk-list uk-list-divider">
+
+                                    <li>
+                                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                                            <div class="text-center">
+                                                <h5>รายชื่อผู้คุมสอบ</h5>
+                                            </div>
+                                            <div class="text-center">
+                                                <h5>ตัวเลือก</h5>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    <% for(var j = 0; j < teacher.length ; j++ ) { %>
+                                    <form method="POST" action="/exam/examDetail/<%= result._id %>">
+                                        <li>
+                                            <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                                                <div class="" style="display: flex;align-items: center;">
+                                                    <input hidden value="<%= teacher[j]._id %>" name="id">
+                                                    <input hidden value="teacher" name="type">
+                                                    <input hidden value="<%= result.exam[i].room %>" name="room">
+                                                    <%= teacher[j].firstname %> <%= teacher[j].lastname %>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button class="uk-button uk-button-default"
+                                                        type="submit">ADD</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </form>
+                                    <% } %>
+                                    <% for(var j = 0; j < staff.length ; j++ ) { %>
+                                    <form method="POST" action="/exam/examDetail/<%= result._id %>">
+                                        <li>
+                                            <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                                                <div class="" style="display: flex;align-items: center;">
+                                                    <input hidden value="<%= staff[j]._id %>" name="id">
+                                                    <input hidden value="staff" name="type">
+                                                    <input hidden value="<%= result.exam[i].room %>" name="room">
+                                                    <%= staff[j].firstname %> <%= staff[j].lastname %>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button class="uk-button uk-button-default"
+                                                        type="submit">ADD</button>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </form>
+                                    <% } %>
+
+                                </ul>
+                            </div>
+                            <div class="uk-modal-footer uk-text-right">
+
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Model teacher -->
+
+
+
+                    <!-- Model Student -->
+                    <div id="modal-student<%= result.exam[i].room %>" uk-modal>
+                        <div class="uk-modal-dialog">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <div class="uk-modal-header">
+                                <h2 class="uk-modal-title">รายชื่อนิสิต : ห้องสอบ <%= result.exam[i].room %></h2>
+                            </div>
+                            <div class="uk-modal-body">
+                                <ul class="uk-list uk-list-divider">
+
+                                    <li>
+                                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                                            <div class="text-center">
+                                                <h5>รหัสนิสิต | ชื่อ - นามสกุลนิสิต</h5>
+                                            </div>
+                                            <div class="text-center">
+                                                <h5>ที่นั่งสอบ</h5>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    <% for( var j = 0 ; j < result.exam[i].students.length ; j++) { %>
+                                    <li>
+                                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                                            <div><%= result.exam[i].students[j].student.id %>
+                                                <%= result.exam[i].students[j].student.firstname %>
+                                                <%= result.exam[i].students[j].student.lastname %>
+
+                                            </div>
+                                            <div class="text-center">
+                                                <span
+                                                    id="row"><%= String.fromCharCode(result.exam[i].students[j].col + 65) %><%= result.exam[i].students[j].row %>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <div class="uk-modal-footer uk-text-right">
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Model Student -->
+                    <% } %>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</body>
+
+</html>
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+<script src="/js/jquery.multi-select.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+<script>
+    $(".search-student").easyAutocomplete(optionsStudent);
+    var optionsTeacher = {
+        url: function (phrase) {
+            console.log(phrase);
+            return "/manageuser/teacher/search/" + phrase;
+        },
+        getValue: function (item) {
+            return item.teacher_id
+        },
+        requestDelay: 300,
+        ajaxSettings: {
+            dataType: "json",
+            method: "GET",
+            data: {
+                dataType: "json"
+            }
+        },
+        list: {
+            onChooseEvent: function () {
+
+            }
+        },
+        template: {
+            type: "custom",
+            method: function (value, item) {
+                return item.teacher_id + " | " + item.firstname + " " + item.lastname;
+            }
+        },
+        preparePostData: function (data) {
+            //   console.log( $("#s_post").val());
+            // data.phrase = $("#search-auto-com").val();
+            // data._token = $("#s_post").val();
+            return data;
+        },
+    };
+</script>

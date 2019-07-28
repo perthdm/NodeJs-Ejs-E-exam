@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>E-Exams: เพิ่มวิชาที่เปิดสอน</title>
+
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>88620159 Software Testing</span></h3>
+        <div>
+            <div class="uk-grid-small" uk-grid>
+
+
+                <div class="uk-width-1-1@s">
+                    <center>
+                        <h4>ปีการศึกษา :
+                            <%= resultYeat.year %>/
+                            <%= resultYeat.term %>
+                        </h4>
+
+                        <center>
+                </div>
+
+
+
+                <div class="uk-width-1-1" style="margin:15px"></div>
+
+                <!------------------- Table Teacher ------------------->
+                <div class="uk-width-3-4" style="display: flex;
+                flex-direction: column-reverse;">
+                    <h5 class="uk-heading-divider" style="color: #f7a317">อาจารย์ผู้สอน</h5>
+                </div>
+                <div class="uk-width-1-4">
+                    <button class="uk-button uk-button-primary" style="width:100%;" type="submit" href="#modal-teacher"
+                        uk-toggle>เลือกอาจารย์</button>
+                </div>
+
+
+
+                <table class="uk-table uk-table-divider uk-table-striped" id="listTeacher" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center" style="width:20%">ลำดับที่</th>
+                            <th class="uk-text-center" style="width:40%">ตำแหน่ง</th>
+                            <th class="uk-text-center" style="width:40%">ชื่อ-นามสกุล</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="uk-text-center">
+                        <% for(var i=0 ; i<resultCourse.teacher.length ; i++){ %>
+                        <tr>
+                            <td>
+                                <%= i+1 %>
+                            </td>
+                            <td>
+                                <%= resultCourse.teacher[i].position %>
+                            </td>
+                            <td>
+                                <%= resultCourse.teacher[i].firstname %>
+                                <%= resultCourse.teacher[i].lastname %>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <br>
+                <!------------------- Table Teacher ------------------->
+
+                <div class="uk-width-1-1" style="margin:15px"></div>
+
+                <!------------------- Table Student ------------------->
+                <div class="uk-width-3-4" style="display: flex; flex-direction: column-reverse; ">
+                    <h5 class="uk-heading-divider" style="color: #f7a317">รายชื่อนิสิต</h5>
+                </div>
+            
+                <div class="uk-width-1-4">
+                    <button class="uk-button uk-button-primary " style="width:100%;" type="submit" href="#modal-student"
+                        uk-toggle>เลือกนิสิต</button>
+                </div>
+                <table class="uk-table uk-table-divider uk-table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center" style="width:20%">ลำดับที่</th>
+                            <th class="uk-text-center" style="width:40%">รหัสนิสิต</th>
+                            <th class="uk-text-center" style="width:40%">ชื่อ-นามสกุล</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="uk-text-center">
+                        <% for(var i=0 ; i<resultCourse.student.length ; i++){ %>
+                        <tr>
+                            <td>
+                                <%= i+1 %>
+                            </td>
+                            <td>
+                                <%= resultCourse.student[i].id %>
+                            </td>
+                            <td>
+                                <%= resultCourse.student[i].firstname %>
+                                <%= resultCourse.student[i].lastname %>
+                            </td>
+
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Model Teacher -->
+
+    <div id="modal-teacher" uk-modal>
+        <div class="uk-modal-dialog">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">อาจารย์ผู้สอน</h2>
+            </div>
+            <div class="uk-modal-body" uk-overflow-auto>
+                <div class="uk-overflow-auto">
+                    <div class="uk-search uk-search-default" style="width: 100%;">
+
+                        <button class="uk-search-icon-flip" disabled uk-search-icon></button>
+                        <input class="uk-search-input" type="search" id="teacherInput"
+                            placeholder="กรุณากรอกชื่อ - นามสกุล" onkeyup="searchTeacher()">
+
+                    </div>
+                    <form id="formTeacher" action="/course/addTeacher/<%= _idSubject %>" method="POST">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-table-divider  uk-table-striped"
+                            id="table-Teacher">
+                            <thead>
+                                <tr>
+                                    <th class="uk-text-center uk-width-small">ตัวเลือก</th>
+                                    <th class="uk-text-center">ชื่อ - นามสกุลอาจารย์</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for(var i = 0 ; i<resultTeacher.length ; i++){ %>
+                                <% if(check[i] == 1) { %>
+                                <tr>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <input class="uk-checkbox" type="checkbox" name="check" checked
+                                            value="<%= resultTeacher[i]._id %>">
+                                    </td>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultTeacher[i].position %>
+                                        <%= resultTeacher[i].firstname %>
+                                        <%= resultTeacher[i].lastname %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                <% if(check[i] == 0) { %>
+                                <tr>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <input class="uk-checkbox" type="checkbox" name="check"
+                                            value="<%= resultTeacher[i]._id %>">
+                                    </td>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultTeacher[i].position %>
+                                        <%= resultTeacher[i].firstname %>
+                                        <%= resultTeacher[i].lastname %>
+                                    </td>
+                                </tr>
+                                <% } %>
+
+                                <% } %>
+
+                            </tbody>
+                        </table>
+                </div>
+
+
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                <button class="uk-button uk-button-primary" type="submit">Save</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Model Teacher -->
+
+
+
+
+    <!-- Model Student -->
+    <div id="modal-student" uk-modal>
+        <div class="uk-modal-dialog">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">รายชื่อนิสิต</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+                <div class="uk-overflow-auto">
+                    <div class="uk-search uk-search-default" style="width: 100%;">
+
+                        <button class="uk-search-icon-flip" disabled uk-search-icon></button>
+                        <input class="uk-search-input" type="search" id="teacherInput"
+                            placeholder="กรุณากรอกชื่อ - นามสกุล" onkeyup="">
+
+                    </div>
+                    <form id="formTeacher" action="/course/addStudent/<%= _idSubject %>" method="POST">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-table-divider  uk-table-striped"
+                            id="table-Teacher">
+                            <thead>
+                                <tr>
+                                    <th class="uk-text-center ">ตัวเลือก</th>
+                                    <th class="uk-text-center ">รหัสนิสิต</th>
+                                    <th class="uk-text-center">ชื่อ - นามสกุลนิสิต</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for(var i = 0 ; i<resultStudent.length ; i++){ %>
+                                <% if(checkst[i] == 1) { %>
+                                <tr>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <input class="uk-checkbox" type="checkbox" name="check" checked
+                                            value="<%= resultStudent[i]._id %>">
+                                    </td>
+
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultStudent[i].id %>
+                                    </td>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultStudent[i].firstname %>
+                                        <%= resultStudent[i].lastname %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                <% if(checkst[i] == 0) { %>
+                                <tr>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <input class="uk-checkbox" type="checkbox" name="check"
+                                            value="<%= resultStudent[i]._id %>">
+                                    </td>
+
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultStudent[i].id %>
+                                    </td>
+                                    <td class="uk-text-nowrap uk-text-center">
+                                        <%= resultStudent[i].firstname %>
+                                        <%= resultStudent[i].lastname %>
+                                    </td>
+                                </tr>
+                                <% } %>
+
+                                <% } %>
+
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                <button class="uk-button uk-button-primary" type="submit">Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- Model Student -->
+
+
+    <!-- Model upload -->
+    <!-- <div id="modal-upload" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title uk-legend">นำเข้าข้อมูลนิสิต</h2>
+            <form action="/course/uploadStudent/<%= _idSubject %>" method="post" enctype="multipart/form-data">
+                <fieldset class="uk-fieldset">
+                    <div class="uk-flex row center">
+                        <div style="text-align: right;width: 500px;">
+                            <div style="padding-top: 10px;display: inline;">นำเข้านิสิต</div>
+
+                            <input type="file" name="student">
+
+                        </div>
+                    </div>
+
+                </fieldset>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close " type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+
+        </div>
+    </div> -->
+    <!-- Model upload -->
+</body>
+
+</html>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+
+<script>
+    function searchTeacher() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("teacherInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table-Teacher");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myCreateFunction(position, firstname, lastname) {
+        console.log(position + " " + firstname + " " + lastname);
+
+        var coffee = document.getElementById("formTeacher");
+        var table = document.getElementById("listTeacher");
+
+        $('#listTeacher').append('<tr>' +
+            '<td>' + table.rows.length + '</td>' +
+            '<td class="uk-text-nowrap">' + position + '</td>' +
+            '<td class="uk-text-nowrap">' + firstname + " " + lastname + '</td>' +
+            '<td class="uk-text-nowrap"><button onclick="delTeacher(this)" class="uk-icon-link uk-icon-button btn-danger" uk-icon="trash"></button></td>' +
+            '</tr>')
+
+    }
+
+    function delTeacher(index) {
+        var i = index.parentNode.parentNode.rowIndex;
+        document.getElementById("listTeacher").deleteRow(i);
+    }
+
+
+
+
+    console.log('<%= resultCourse.teacher[0] %>');
+</script>

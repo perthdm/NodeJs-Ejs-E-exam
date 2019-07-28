@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: ดูห้องสอบ</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>ดูคุมห้องสอบ</span></h3>
+        <div class="uk-text-center" uk-grid>
+            <div class="uk-width-4-4">
+                <form class="uk-search uk-search-default" style="width: 100%;">
+                    <input class="uk-search-input" type="search" placeholder="ค้นหา ชื่อวิชา / รหัสวิชา" id="myInput"
+                        onkeyup="search()">
+                </form>
+            </div>
+        </div>
+
+
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="uk-text-center  uk-table-shrink">ลำดับ</th>
+                    <th class="uk-text-center  uk-width-medium">รหัสวิชา</th>
+                    <th class="uk-text-center uk-width-medium">ชื่อวิชา</th>
+                    <th class="uk-text-center uk-width-medium">ภาคเรียน</th>
+                </tr>
+            </thead>
+            <tbody class="uk-text-center">
+                <% for(let i = 0 ; i < result.length ; i++){ %>
+                <tr onclick="view('<%= result[i]._id %>')"> 
+                    <td><%= i+1 %></td>
+                    <td><%=  result[i].idSubject %></td>
+                    <td><%=  result[i].subject %></td>
+                    <td><%=  result[i].term %>/<%= result[i].year %></td>
+                </tr>
+                <%  } %>
+
+                
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+
+
+<script>
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function view(_id) {
+        window.location.href = "/staff/examiner/room/" + _id;
+    }
+
+</script>

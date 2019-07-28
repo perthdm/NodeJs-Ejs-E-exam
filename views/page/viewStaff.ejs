@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+    <title>E-Exams: เรียกดูข้อมูลอาจารย์</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>เรียกดูข้อมูลเจ้าหน้าที่</span></h3>
+
+        <div style="display: flex; justify-content: center">
+            <div style="min-width: 500px;">
+               
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">ชื่อ</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input firstname.." name="firstname" readonly value="<%= result.firstname %>">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">นามสกุล</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input lastname.." name="lastname" readonly value="<%= result.lastname %>">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">ที่อยู่</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input address.." name="address" readonly value="<%= result.address %>">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">เบอร์โทรศัพท์</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="tel" placeholder="Input phone number" name="phone" readonly value="<%= result.phone %>">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">อีเมล</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="email" placeholder="Input e-mail" name="email" readonly value="<%= result.email %>">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">ตำแหน่ง</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input position" name="position" readonly value="<%= result.position %>">
+                        </div>
+                    </div>
+
+                    <a href="/teacher">
+                        <button class="uk-button uk-button-primary " style="width:100%;" type="button" >Back</button>
+                    </a>
+               
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>

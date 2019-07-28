@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i&subset=thai');
+body{
+    margin: 0;
+    width: 100%;
+    min-width: 150px;
+}
+.bg{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+    width: 100%;
+    background-image: url('../images/bg.png');
+    background-size: cover;
+    background-position: right bottom;
+    min-height: 400px;
+
+}
+
+/* .bg-l{
+    width: 50%;
+    max-width: 500px; 
+    position: fixed;
+    left: 0;
+    top: 0;
+
+}
+
+.bg-r{
+    width: 50%;
+    max-width: 500px; 
+    position: fixed;
+    right:  0;
+    bottom: 0;
+
+} */
+
+
+.content{
+    font-family: 'Kanit', sans-serif;
+    font-weight: 300;
+    margin: 20px;
+    background-color: white;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: transparent;
+    border: 5px solid white;
+  
+   
+}
+

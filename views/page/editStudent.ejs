@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+    <title>E-Exams: เพิ่มนิสิต</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+    <%- include('../layouts/topbar') %>;
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>แก้ไขข้อมูลนิสิต</span></h3>
+
+        <div style="display: flex; justify-content: center">
+            <div style="min-width: 500px;">
+                <form class="uk-form-stacked" method="post" action="/student/edit/submit">
+
+                    <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">ชื่อ</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input firstname.." name="firstname"  value="<%= result.firstname %>" required>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">นามสกุล</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input lastname.." name="lastname"  value="<%= result.lastname %>" required>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">รหัสนิสิต</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input id" name="id" readonly value="<%= result.id %>" required style="background-color:#F8F8F8">
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">ที่อยู่</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input address" name="address"  value="<%= result.address %>" required>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">เบอร์โทรศัพท์</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input phone number" name="phone"  value="<%= result.phone %>" required>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">อีเมล</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="text" placeholder="Input e-mail" name="email"  value="<%= result.email %>" required>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                                <label class="uk-form-label" for="form-stacked-text">คณะ</label>
+                                <select class="uk-select" id="faculty" name="faculty">
+                                <option selected disabled>เลือกคณะ</option>
+                                <option value="คณะการจัดการและการท่องเที่ยว">คณะการจัดการและการท่องเที่ยว</option>
+                                <option value="คณะพยาบาลศาสตร์">คณะพยาบาลศาสตร์</option>
+                                <option value="คณะภูมิสารสนเทศศาสตร์">คณะภูมิสารสนเทศศาสตร์</option>
+                                <option value="คณะโลจิสติกส์">คณะโลจิสติกส์</option>
+                                <option value="คณะวิทยาศาสตร์การกีฬา">คณะวิทยาศาสตร์การกีฬา</option>
+                                <option value="คณะศึกษาศาสตร์">คณะศึกษาศาสตร์</option>
+                                <option value="วิทยาลัยการบริหารรัฐกิจ">วิทยาลัยการบริหารรัฐกิจ</option>
+                                <option value="วิทยาลัยวิทยาการวิจัยและวิทยาการปัญญา">วิทยาลัยวิทยาการวิจัยและวิทยาการปัญญา</option>
+                                <option value="คณะการแพทย์แผนไทยอภัยภูเบศร">คณะการแพทย์แผนไทยอภัยภูเบศร</option>
+                                <option value="คณะมนุษยศาสตร์และสังคมศาสตร์">คณะมนุษยศาสตร์และสังคมศาสตร์</option>
+                                <option value="คณะวิทยาการสารสนเทศ">คณะวิทยาการสารสนเทศ</option>
+                                <option value="คณะวิศวกรรมศาสตร์">คณะวิศวกรรมศาสตร์</option>
+                                <option value="คณะสาธารณสุขศาสตร์">คณะสาธารณสุขศาสตร์</option>
+                                <option value="วิทยาลัยนานาชาติ">วิทยาลัยนานาชาติ</option>
+                                <option value="คณะแพทยศาสตร์">คณะแพทยศาสตร์</option>
+                                <option value="บัณฑิตวิทยาลัย">บัณฑิตวิทยาลัย</option>
+                                <option value="คณะดนตรีและการแสดง">คณะดนตรีและการแสดง</option>
+                                <option value="คณะเภสัชศาสตร์">คณะเภสัชศาสตร์</option>
+                                <option value="คณะรัฐศาสตร์และนิติศาสตร์">คณะรัฐศาสตร์และนิติศาสตร์</option>
+                                <option value="คณะวิทยาศาสตร์">คณะวิทยาศาสตร์</option>
+                                <option value="คณะศิลปกรรมศาสตร์">คณะศิลปกรรมศาสตร์</option>
+                                <option value="คณะสหเวชศาสตร์">คณะสหเวชศาสตร์</option>
+                                <option value="วิทยาลัยพาณิชยศาสตร์">วิทยาลัยพาณิชยศาสตร์</option>
+                              
+    
+                            </select>
+                        </div>
+
+                    <button class="uk-button uk-button-primary " style="width:100%;" type="submit">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+
+<script>
+    document.getElementById("faculty").value = "<%= result.faculty %>";
+</script>

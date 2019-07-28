@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: เพิ่มการสอบ</title>
+</head>
+
+<body>
+        <%- include('../layouts/sidebar') %>;
+        <%- include('../layouts/topbar') %>;
+    
+
+    <!----------------------- Search Room Exam ----------------------->
+    <div class="top-connent" style="background-color:#efefef">
+        <h3 class="uk-heading-line uk-text-center"><span>ค้นหาห้องสอบ</span></h3>
+        <form action="/exam/roomExam/<%= course._id %>" method="POST">
+            <table style="width:100%;">
+                <% if (dateTime == null) { %>
+                <tr>
+                    <td style="text-align:right; width: 100px;">วันที่สอบ&nbsp;</td>
+                    <td colspan="3">
+                        <input type="date" class="uk-input" required name="date">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="text-align:right; width: 100px;">เวลาเริ่มสอบ&nbsp;</td>
+                    <td>
+                        <input type="time" class="uk-input" required name="timestart">
+
+                    </td>
+                    <td class="uk-text-center" style="width: 50px;">ถึง</td>
+                    <td>
+                        <input type="time" class="uk-input" required name="timeend">
+                    </td>
+                </tr>
+
+                <% } else { %>
+                <tr>
+                    <td style="text-align:right;  width: 100px;">วันที่สอบ&nbsp;</td>
+                    <td colspan="3">
+                        <input type="date" class="uk-input" value="" required name="date">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="text-align:right;  width: 100px;">เวลาเริ่มสอบ&nbsp;</td>
+                    <td>
+                        <input type="time" class="uk-input" required name="timestart">
+                        <input hidden value="<%= dateTime.timestart %>">
+                    </td>
+                    <td class="uk-text-center" style="width: 50px;">ถึง</td>
+                    <td>
+                        <input type="time" class="uk-input" required name="timeend">
+                        <input hidden value="<%= dateTime.timeend %>">
+                    </td>
+                </tr>
+
+                <% } %>
+                <tr>
+                    <td colspan="4" class="uk-text-right"> <button type="submit"
+                            class="uk-button uk-button-primary">ตรวจสอบ</button>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+    <!----------------------- Search Room Exam ----------------------->
+
+
+    <!----------------------- Result Room Exam ----------------------->
+    <% if (room.length != 0) { %>
+    <div class="content" style="margin-top:30px !important">
+        <h3 class="uk-heading-line uk-text-center"><span>เพิ่มการสอบ <%= course.idSubject %>
+                <%= course.subject %></span></h3>
+                <h4>รายละเอียดวิชา</h4>
+                <p>จำนวนนิสิตที่ลงทะเบียน : <%= course.student.length %> คน</p>
+        <form method="POST" action="/exam/insertExam">
+            <table style="width:100%;">
+
+                <tr>
+                    <td style="text-align:right; width:15%;">หัวข้อการสอบ&nbsp;</td>
+                    <td>
+                        <input type="text" class="uk-input" required placeholder="กรุณากรอกหัวข้อการสอบ" name="topic">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:right; width:15%;">รายละเอียดการสอบ&nbsp;</td>
+                    <td>
+                        <input type="text" class="uk-input" placeholder="กรุณากรอกการสอบ" required name="detail">
+                        <input type="text" hidden required value="<%= course._id %>" name="course">
+                        <input type="text" hidden required value="<%= dateTime.date %>" name="date">
+                        <input type="text" hidden required value="<%= dateTime.timeStart %>" name="timestart">
+                        <input type="text" hidden required value="<%= dateTime.timeEnd %>" name="timeend">
+
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <table class="uk-table uk-table-divider">
+                <thead>
+                    <tr>
+                        <th class="uk-table-shrink uk-text-center">เลือก</th>
+                        <th class="uk-text-center">ห้อง</th>
+                        <th class="uk-width-small uk-text-center">จำนวนที่นั่งใช้แล้ว</th>
+                        <th class="uk-width-small uk-text-center">จำนวนที่นั่งทั้งหมด</th>
+                        <th class="uk-width-small uk-text-center">จำนวนที่นั่ง</th>
+                    </tr>
+                </thead>
+                <tbody class="uk-text-center">
+
+                    <% for(let i=0;i<room.length;i++) { %>
+                    <% if (room[i].status) { %>
+                    <tr>
+                        <td> <input  type="checkbox" id="checkbox<%= room[i].name %>" onclick="check('<%= room[i].name %>')" name="room" value="<%= room[i].namebuilding %>-<%= room[i].name %>"></td>
+                        <td>
+                            <%= room[i].namebuilding %> -
+                            <%= room[i].name %>
+
+                        </td>
+
+                        <td>
+                            <%= room[i].usage %>
+                        </td>
+
+                        <td>
+                            <%= room[i].row * room[i].col %>
+                        </td>
+
+                        <td>
+                            <input disabled hidden name="row" id="row<%= room[i].name %>"  value="<%= room[i].row %>">
+                            <input disabled  hidden name="col" id="col<%= room[i].name %>"  value="<%= room[i].col %>">
+                             <input disabled   name="count" class="uk-input" required id="input<%= room[i].name %>" type="number" placeholder="ระบุจำนวนที่นั่ง" min="1" max="<%= (room[i].row * room[i].col) - room[i].usage %>">
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+            <p class="uk-text-center">
+                <button class="uk-button uk-button-primary" type="submit">บันทึก</button>
+                <button class="uk-button uk-button-default uk-modal-close" type="reset">ยกเลิก</button>
+            </p>
+            <% } %>
+        </form>
+    </div>
+    <!----------------------- Result Room Exam ----------------------->
+</body>
+
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+<script>
+function check(idInput) {
+    var strcheck = 'checkbox' + idInput
+    var strinput = 'input' + idInput
+    var row = 'row' + idInput;
+    var col = 'col' + idInput;
+    var checkbox = document.getElementById(strcheck);
+    var input = document.getElementById(strinput)
+    var inputRow = document.getElementById(row)
+    var inputCol = document.getElementById(col)
+    if(checkbox.checked == false){
+        input.disabled = true
+        inputRow.disabled = true
+        inputCol.disabled = true
+    }else{
+        input.disabled = false
+        inputRow.disabled = false
+        inputCol.disabled = false
+    }
+}
+
+</script>

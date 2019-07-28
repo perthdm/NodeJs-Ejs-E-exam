@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+    <title>E-Exams: เพิ่มนิสิต</title>
+</head>
+
+<body>
+        <%- include('../layouts/sidebar') %>;
+        <%- include('../layouts/topbar') %>;
+    
+     
+
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>เพิ่มข้อมูลตึก</span></h3>
+
+        <div style="display: flex; justify-content: center">
+            <div style="min-width: 500px;">
+                <form class="uk-form-stacked" method="post" action="/building/addBuilding/submit">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">อาคาร</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" 
+                                name="namebuilding" required>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">ชื่ออาคาร</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" 
+                                name="fullnamebuilding" required>
+                        </div>
+                    </div>
+
+
+                    <button class="uk-button uk-button-primary " style="width:100%;" type="submit">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>

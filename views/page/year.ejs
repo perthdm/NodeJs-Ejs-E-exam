@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>E-Exams: จัดการปีการศึกษา</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+        <%- include('../layouts/topbar') %>;
+
+            <div id="modal-example" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">เพิ่มปีการศึกษา</h2>
+
+                    <form class="uk-form-stacked" method="post" action="/year/addYear">
+                        <div class="uk-margin">
+                            <label class="uk-form-label">ปีการศึกษา</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="yearInput" name="year" required>
+                        </select>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">ภาคเรียน</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="form-horizontal-select" name="term" required>
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                            </div>
+                        </div>
+                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                            <label><input class="uk-checkbox" type="checkbox" name="type"> ตั้งเป็นค่าเริ่มต้น</label>
+                        </div>
+                        <p class="uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <button class="uk-button uk-button-primary" type="submit">Save</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="content">
+                <h3 class="uk-heading-line uk-text-center"><span class="color-warning">จัดการปีการศึกษา</span></h3>
+                <div class="uk-text-center" uk-grid>
+                    <div class="uk-width-3-4">
+                        <!-- <div class="uk-search uk-search-default" style="width: 100%;">
+                    <input class="uk-search-input" type="text" id="myInput" onkeyup="search()"
+                        placeholder="ค้นหา ชื่อ-นามสกุล / อีเมล">
+                </div> -->
+                    </div>
+                    <div class="uk-width-1-4">
+                        <button uk-toggle="target: #modal-example" class="uk-button uk-button-primary" style="width: 100%;"><i
+                        class="uk-icon-link" uk-icon="plus-circle" style="color:#FFF;"></i> เพิ่มปีการศึกษา</button>
+                    </div>
+                </div>
+
+
+
+                <table class="uk-table uk-table-divider uk-table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center uk-table-shrink">เลือก</th>
+                            <th class="uk-text-center">ปีการศึกษา</th>
+                            <th class="uk-text-center">ภาคเรียน</th>
+                            <th class="uk-text-center uk-width-small">ตัวเลือก</th>
+                        </tr>
+                    </thead>
+                    <tbody class="uk-text-center">
+                        <% for(var i=0 ; i<result.length ; i++) { %>
+                            <tr>
+                                <td>
+                                    <% if( result[i].type == 'on'){ %>
+                                        <input class="uk-radio" onclick="check('<%= result[i]._id %>')" type="radio" checked name="radio2">
+                                        <% } else { %>
+                                            <input class="uk-radio" onclick="check('<%= result[i]._id %>')" type="radio" name="radio2">
+                                            <% } %>
+
+                                </td>
+                                <td>
+                                    <%= result[i].year %>
+                                </td>
+                                <td>
+                                    <%= result[i].term %>
+                                </td>
+                                <td class="uk-text-center">
+
+                                    <a onclick="del('<%= result[i]._id %>')" class="uk-icon-link uk-icon-button btn-danger" uk-icon="trash"></a>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+</body>
+
+</html>
+
+<script src="uikit/js/uikit.min.js"></script>
+<script src="uikit/js/uikit-icons.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var min = 2015,
+        max = new Date().getFullYear() + 10,
+        select = document.getElementById('yearInput');
+
+    for (var i = min + 543; i <= max + 543; i++) {
+        var opt = document.createElement('option');
+        if (i == new Date().getFullYear() + 543) {
+            opt.selected = true;
+        }
+        opt.value = i;
+        opt.innerHTML = i;
+        select.appendChild(opt);
+    }
+
+    function check(_id) {
+        window.location = "/year/check/" + _id;
+    }
+
+    function del(_id) {
+        window.location = "/year/del/" + _id;
+    }
+</script>

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i&subset=thai');
+body{
+    font-family: 'Kanit', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Kanit', sans-serif;
+}
+
+.uk-navbar-item, .uk-navbar-nav>li>a{
+    min-height: 60px !important;
+}
+
+svg{
+    width: 16px;
+}
+
+.uk-table td{
+    padding: 12px 12px;
+    vertical-align: inherit !important;
+    font-size: 14px;
+}
+
+.uk-icon-button{
+    width: 30px;
+    height: 30px;
+}
+
+::placeholder{
+    font-weight: 300;
+}
+
+thead{
+    border-bottom: 3px solid #f7a317;
+}
+
+.btn-danger{
+    background-color: #ec2147;
+    color: white;
+}
+
+.btn-warning{
+    background-color: #F2B827;
+    color: white;
+}
+
+.btn-primary{
+    background-color: #67b94d;
+    color: white;
+}
+
+.color-warning{
+    color: #F2B827;
+}

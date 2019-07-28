@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+    <title>E-Exams: จัดการห้องสอบ</title>
+</head>
+
+<body>
+    <%- include('../layouts/sidebar') %>;
+        <%- include('../layouts/topbar') %>;
+
+            <div id="modal-example" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">เพิ่มห้องสอบ </h2>
+
+                    <form class="uk-form-stacked" method="post" action="/building/addRoom/submit/<%= result._id %>">
+                        <div class="uk-margin">
+                            <label class="uk-form-label">ชื่อห้อง</label>
+                            <input class="uk-input" type="text" name="no" required>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">แถว</label>
+                            <input class="uk-input" type="number" name="row" required>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">คอลัมน์</label>
+                            <input class="uk-input" type="number" name="col" required>
+                        </div>
+
+                        <input type="text" hidden value="<%= result._id %>" name="_idBuilding">
+
+                        <p class="uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <button class="uk-button uk-button-primary" type="submit">Save</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ------------------------------ -->
+
+            <div class="content">
+                <h3 class="uk-heading-line uk-text-center"><span>จัดการห้อง : <%= result.fullnamebuilding %> </span></h3>
+                <div class="uk-text-center" uk-grid>
+                    <div class="uk-width-3-4">
+                        <form class="uk-search uk-search-default" style="width: 100%;">
+                            <input class="uk-search-input" type="search" placeholder="ค้นหา ชื่อห้อง" onkeyup="search()" id="myInput">
+                        </form>
+                    </div>
+                    <div class="uk-width-1-4">
+                        <button uk-toggle="target: #modal-example" class="uk-button uk-button-primary" style="width: 100%;"><i
+                        class="uk-icon-link" uk-icon="plus-circle" style="color:#FFF;"></i> เพิ่มข้อมูลห้อง</button>
+                    </div>
+                </div>
+
+
+                <table class="uk-table uk-table-divider uk-table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center uk-table-shrink">ลำดับ</th>
+                            <th class="uk-text-center uk-width-medium">ชื่อห้อง</th>
+                            <th class="uk-text-center uk-width-small">แถว</th>
+                            <th class="uk-text-center uk-width-small">คอลัมน์</th>
+                            <th class="uk-text-center uk-width-small">ความจุ</th>
+                            <th class="uk-text-center uk-width-small">ตัวเลือก</th>
+                        </tr>
+                    </thead>
+                    <tbody class="uk-text-center">
+                        <% for(var i=0; i<result.room.length; i++) {%>
+                            <tr>
+                                <td>
+                                    <%= i+1 %>
+                                </td>
+                                <td>
+                                    <%= result.room[i].no %>
+                                </td>
+                                <td>
+                                    <%= result.room[i].row %>
+                                </td>
+                                <td>
+                                    <%= result.room[i].column %>
+                                </td>
+                                <td>
+                                    <%= result.room[i].capacity %>
+                                </td>
+                                <td class="uk-text-center">
+                                    <a class="uk-icon-link uk-icon-button  btn-warning" uk-icon="file-edit" onclick="edit('<%= result.room[i]._id %>' , '<%= result._id %>')"></a>
+                                    <a class="uk-icon-link uk-icon-button  btn-danger" uk-icon="trash" onclick="del('<%= result.room[i]._id %>' , '<%= result._id %>')"></a>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+</body>
+
+</html>
+
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
+<script>
+    function del(_id, _idBuilding) {
+        window.location = "/building/room/delete/" + _idBuilding + "/" + _id;
+    }
+
+    function edit(_id, _idBuilding) {
+        window.location = "/building/room/edit/" + _idBuilding + "/" + _id;
+    }
+
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

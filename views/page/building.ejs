@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="/images/favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/content.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>E-Exams: จัดการตึก</title>
+</head>
+
+<body>
+    <%- include('../layouts/topbar') %>;
+    <%- include('../layouts/sidebar') %>;
+    <div class="content">
+        <h3 class="uk-heading-line uk-text-center"><span>จัดการตึก</span></h3>
+        <div class="uk-text-center" uk-grid>
+            <div class="uk-width-3-4">
+                <form class="uk-search uk-search-default" style="width: 100%;">
+                    <input class="uk-search-input" type="search" placeholder="ค้นหา อาคาร / ชื่ออาคาร" id="myInput"
+                        onkeyup="search()">
+                </form>
+            </div>
+            <div class="uk-width-1-4">
+                <a href="/building/addBuilding" class="uk-button uk-button-primary" style="width: 100%;"><i
+                        class="uk-icon-link" uk-icon="plus-circle" style="color:#FFF;"></i> เพิ่มข้อมูลตึก</a>
+            </div>
+        </div>
+
+
+        <table class="uk-table uk-table-divider uk-table-striped" id="myTable">
+            <thead>
+                <tr>
+                    <th class="uk-text-center uk-table-shrink">ลำดับ</th>
+                    <th class="uk-text-center  uk-width-small">อาคาร</th>
+                    <th class="uk-text-center uk-width-medium">ชื่ออาคาร</th>
+                    <th class="uk-width-small uk-text-center">จำนวนห้อง</th>
+                    <th class="uk-width-small uk-text-center">ตัวเลือก</th>
+                </tr>
+            </thead>
+            <tbody class="uk-text-center">
+                <% for(var i=0; i<result.length; i++) {%>
+                <tr>
+                    <td onclick="view('<%= result[i]._id  %>')" style="padding:0px;"><a
+                            style="text-decoration: none; color:#666;">
+                            <div style="width:100%"><%= i+1  %></div>
+                        </a></td>
+                    <td onclick="view('<%= result[i]._id  %>')" style="padding:0px;"><a
+                            style="text-decoration: none; color:#666;">
+                            <div style="width:100%"><%= result[i].namebuilding  %></div>
+                        </a></td>
+                    <td onclick="view('<%= result[i]._id  %>')" style="padding:0px;"><a
+                            style="text-decoration: none; color:#666;">
+                            <div style="width:100%"><%= result[i].fullnamebuilding  %></div>
+                        </a></td>
+                    <td class="uk-text-center" onclick="view('<%= result[i]._id  %>')" style="padding:0px;"><a
+                            style="text-decoration: none; color:#666;">
+                            <div style="width:100%"><%= result[i].room.length  %></div>
+                        </a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-icon-link uk-icon-button  btn-warning" uk-icon="file-edit"
+                            onclick="edit('<%= result[i]._id %>')"></a>
+                        <a class="uk-icon-link uk-icon-button  btn-danger" uk-icon="trash"
+                            onclick="del('<%= result[i]._id %>')"></a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="uikit/js/uikit.min.js"></script>
+<script src="uikit/js/uikit-icons.min.js"></script>
+
+
+<script>
+    function del(_id) {
+        window.location = "/building/delete/" + _id;
+    }
+
+    function view(_id) {
+        window.location = "/building/view/" + _id;
+    }
+
+    function edit(_id) {
+        window.location = "/building/edit/" + _id;
+    }
+
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

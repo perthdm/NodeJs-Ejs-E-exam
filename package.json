@@ -1,0 +1,30 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mainapi.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect-busboy": "0.0.2",
+    "connect-mongo": "^2.0.3",
+    "cors": "^2.8.5",
+    "ejs": "^2.6.1",
+    "eslint": "^5.15.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mocha": "^6.1.4",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.19",
+    "node-excel-stream": "^1.0.1",
+    "nodemon": "^1.19.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
+}
